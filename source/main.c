@@ -6,6 +6,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #define ARRSIZE 30000
 
 #include <switch.h>
@@ -17,6 +18,7 @@ int pluscount = 0;
 int minuscount = 0;
 int loopmode = 0;
 int beginloop = 0;
+int inputbuff = 0;
 
 int interpret(char x, int i) {
 	switch (x) {
@@ -35,15 +37,31 @@ int interpret(char x, int i) {
 		case '.': // print contents of current cell in ASCII
 			printf("%c", array[counter]);
 			break;
-		//case ',': // ask for one char of input
-			//array[counter] = getchar();
-			//break;
+		case ',': // ask for one byte of input
+			printf("use the A and B buttons to choose the number you want to input, and - to submit it.\n%d", inputbuff);
+			while(1) {
+				hidScanInput();
+				u32 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+				if (kDown & KEY_A) {
+					++inputbuff;
+					printf("\b%d", inputbuff);
+				}
+				else if (kDown & KEY_B) {
+					--inputbuff;
+					printf("\b%d", inputbuff);
+				}
+				else if (kDown & KEY_MINUS)
+					break;
+			}
+			array[counter] = inputbuff;
+			inputbuff = 0;
+			break;
 		case '[': // begin while (array[counter] == 0) loop
 			loopmode = 1;
 			beginloop = i;
 			break;
-		case '!': // exit command (shell has a non silent version)
-			exit(0);
+		case '*': // sleeps for 1 second
+			svcSleepThread(1000000000);
 			break;
 		case '@': // frees array
 		  	memset(array, 0, ARRSIZE);
@@ -67,6 +85,7 @@ int interpret(char x, int i) {
 			pluscount = 0;
 			break;
 		case '/': // clear screen
+			printf("\x1b[2J");
 			break;
 		default: // else
 			break;
