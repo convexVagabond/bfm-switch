@@ -1,5 +1,5 @@
 // bfm-switch brainfuck interpreter //
-// credits to: team switchbrew for libnx, and thekgg for his brainfuck // 
+// credits to: team switchbrew for libnx, and thekgg for his brainfuck //
 // homebrew that i was able to use as a reference //
 // copyright (c) 2018 isy //
 // under the GNU General Public License v3 (see LICENSE.md for more info) //
@@ -46,10 +46,9 @@ int interpret(char x, int i) {
 			exit(0);
 			break;
 		case '@': // frees array
-		  //free(array);
-			memset(array, 0, ARRSIZE);
-			printf("tape cleared.\n");
-      break;
+		  	memset(array, 0, ARRSIZE);
+		  	printf("tape cleared.\n");
+      		  	break;
 		case '^': // print current cells numerical value
 			printf("%d\n", array[counter]);
 			break;
@@ -69,11 +68,9 @@ int interpret(char x, int i) {
 			break;
 		case '/': // clear screen
 			break;
-			}
 		default: // else
 			break;
 	}
- 
 	return 0;
 }
 
@@ -94,8 +91,12 @@ void runbrain(char* code, int size) {
 }
 
 void runfile() {
-	// let's read the file in argument 1
-	FILE* myfile = fopen(main.bf, "rb");
+	// let's read the file
+	FILE* myfile = fopen("main.bf", "rb");
+
+	if (myfile == NULL) {
+		printf("Could not load file main.bf");
+	}
 
 	// obtain file size
 	fseek(myfile, 0, SEEK_END);
@@ -128,8 +129,6 @@ int main(int argc, char **argv)
     {
         //Scan all the inputs. This should be done once for each frame
         hidScanInput();
-
-        
 
         //hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
