@@ -1,3 +1,4 @@
+#excludes all build products
 main
 *.lst
 *.map
@@ -8,3 +9,7 @@ main
 *.nro
 *.nso
 *.pfs0
+#i keep a brainfuck file for testing in the folder
+*.bf
+#i use vscode so this just excludes stuff like my tasks list and c/c++ properties
+.vscode

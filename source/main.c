@@ -13,6 +13,7 @@
 
 char* input;
 char* array;
+int size = 0;
 int counter = 0;
 int pluscount = 0;
 int minuscount = 0;
@@ -115,7 +116,8 @@ void runfile() {
 	FILE* myfile = fopen("main.bf", "rb");
 
 	if (myfile == NULL) {
-		printf("Could not load file main.bf");
+		printf("Could not load file main.bf, using testfile instead.\n");
+		myfile = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.****@++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.**/@,.";
 	}
 
 	// obtain file size
@@ -151,7 +153,7 @@ int main(int argc, char **argv)
         hidScanInput();
 
         //hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+        u32 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
         if (kDown & KEY_PLUS) break; // break in order to return to hbmenu
 
