@@ -1,0 +1,10 @@
+main
+*.lst
+*.map
+*.d
+*.o
+*.elf
+*.nacp
+*.nro
+*.nso
+*.pfs0
