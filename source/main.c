@@ -93,6 +93,7 @@ int interpret(char x, int i) {
 	return 0;
 }
 
+// the code responsible for passing the file on to interpret() and doing weird loop shit
 void runbrain(char* code, int size) {
 	for (int i = 0; i < size; ++i) {;
 		interpret(code[i], i);
