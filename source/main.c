@@ -161,7 +161,7 @@ int main(int argc, char **argv)
         gfxSwapBuffers();
         gfxWaitForVsync();
     }
-
+    free(array);
     gfxExit();
     return 0;
 }
